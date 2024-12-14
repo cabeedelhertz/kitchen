@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package kitchen.v1;
+
+import "google/protobuf/timestamp.proto";
+
+
+message Post {
+	string id = 1;
+    string caption = 2;
+    string user_id = 3;
+    repeated string image_urls = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message CreatePostRequest {
+	string caption = 1;
+    string user_id = 2;
+}
+
+message CreatePostResponse {
+	string id = 1;
+}
+
+message GetPostRequest {
+	string id = 1;
+}
+
+message GetPostResponse {
+	Post post = 1;
+}
+
+service KitchenService {
+	rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+	rpc GetPost(GetPostRequest) returns (GetPostResponse);
+}

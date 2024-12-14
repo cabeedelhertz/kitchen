@@ -1,0 +1,25 @@
+# buf.gen.yaml
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      # <module_name>   : name in go.mod
+      # <relative_path> : where generated code should be output
+      value: kitchen/proto/gen
+  # Remove `disable` field if googleapis is not used
+  disable:
+    - module: buf.build/googleapis/googleapis
+      file_option: go_package_prefix
+plugins:
+  - remote: buf.build/connectrpc/go:v1.17.0
+    out: proto/gen
+    opt:
+      - paths=source_relative
+  # dependencies
+  - remote: buf.build/protocolbuffers/go:v1.34.2
+    out: proto/gen
+    opt:
+      - paths=source_relative
+inputs:
+  - directory: proto
